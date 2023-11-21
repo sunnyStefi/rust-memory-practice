@@ -4,11 +4,11 @@ This README wraps up the most important concepts inside chapters 4.1 and 4.2 of 
 Inside the `src` folder are put correspondent examples (work in progress).
 
 ## Operations on Memory
-Source [What Is Ownership?](https://rust-book.cs.brown.edu/ch04-01-what-is-ownership.html)
+Source [4.1 What Is Ownership?](https://rust-book.cs.brown.edu/ch04-01-what-is-ownership.html)
 
 #### 1. Undefined behaviour
-- e.g. undefined variable. [Full list here](https://doc.rust-lang.org/reference/behavior-considered-undefined.html)
 - it's possible to *have* a pointer to freed memory but &rarr; it's not permitted to *use* it 
+- [Full list here](https://doc.rust-lang.org/reference/behavior-considered-undefined.html)
 
 #### 2. Frame
 -   it's a *mapping* of variables-values inside a single function (scope)
