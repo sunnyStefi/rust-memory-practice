@@ -1,6 +1,7 @@
 # Rust Memory and Permissions
 
-Schema beneath chapters 4.1 and 4.2 of the Rust Book
+This readm wraps up the most important concept inside chapters 4.1 and 4.2 of the Rust Book.
+Inside the `src` folder are put correspondent examples (in progress).
 
 ## 4.1 Ownership
 Source [What Is Ownership?](https://rust-book.cs.brown.edu/ch04-01-what-is-ownership.html)
@@ -21,12 +22,13 @@ Source [What Is Ownership?](https://rust-book.cs.brown.edu/ch04-01-what-is-owner
 - LIFO
 
 #### 4. Pointer
-- e.g. ```let i_am_a_pointer_to_the_heap = String::from("heap_string_here");```
+- is a special variables e.g. ```let i_am_a_pointer_to_the_heap = String::from("heap_string_here");```
 - permits access the data without copying it
 - describes a location in memory (Heap/Stack)
 
 #### 5. Heap
 - hosts Boxes
+  - are constructs
   - can contain ponters to the Stack
   - are used by collections (Vec, String, HashMap)
 - data can *outlive* a function: no automatic deallocation here (??)
@@ -36,24 +38,24 @@ Source [What Is Ownership?](https://rust-book.cs.brown.edu/ch04-01-what-is-owner
 - A variable owns a Box: when the variable's is deallocated in the Stack, the Box is also deallocated in the heap
 
 #### 7. Ownership
-  - variables can own a data on the heap (e.g. Box is a *construct*)
+  - variables can own a data on the heap (e.g. Box)
     ```rust
     let x = Box::new(1) //x owns the Box
     ```
   - can be **MOVED** to another variable
   
-    1. passing as parameter to a function
+    1. variable `a` can passed as parameter `b` to a function
    
         ```rust
-        let  i_am_a_pointer_to_the_heap = String::from("heap_string_here");
+        let  a = String::from("heap_string_here");
     
-        let result = add_some_stuff(i_am_a_pointer_to_the_heap); //moving of ownership happening here: ownership is moved from i_am_a_pointer_to_the_heap to x
+        let result = add_some_stuff(a); //moving of ownership happening here: ownership is moved from a to b
 
-        //cannot access anymore {i_am_a_pointer_to_the_heap}: the pointer lost his connection to the heap
+        //cannot access anymore {a}: the pointer lost his connection to the heap
 
-        fn add_some_stuff(mut x:String) -> String{
-            x.push("_stuff")
-            x
+        fn add_some_stuff(mut b:String) -> String{
+            b.push("_stuff")
+            b
         }
         ````
     2. assignment
