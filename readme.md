@@ -11,7 +11,7 @@ Source [4.1 What Is Ownership?](https://rust-book.cs.brown.edu/ch04-01-what-is-o
 - [Full list here](https://doc.rust-lang.org/reference/behavior-considered-undefined.html)
 
 #### 2. Frame
--   it's a *mapping* of variables-values inside a single function (scope)
+-   it's a *mapping* of **variables-values** inside a single function (scope)
 -   after a function returns, the frame is *deallocated* -or *freed* or *dropped*
 
 #### 3. Stack
@@ -19,13 +19,13 @@ Source [4.1 What Is Ownership?](https://rust-book.cs.brown.edu/ch04-01-what-is-o
 - LIFO
 
 #### 4. Pointer
-- it's a special variables e.g. ```let i_am_a_pointer_to_the_heap = String::from("heap_string_here");``` that describes a location in memory
-- permits access to the data without copying it
+- it's a special variable e.g. ```let pointer_to_the_heap = String::from("heap_string");``` that describes a location in memory
+- permits access to the data without copying it &rarr; shallow copy
 
 #### 5. Heap
 - hosts Boxes
-  - are constructs
-  - are used by collections (Vec, String, HashMap)
+  - constructs
+  - used by collections (Vec, String, HashMap)
 - can contain pointers to the Stack
 
 #### 6. Deallocation
@@ -37,9 +37,9 @@ Source [4.1 What Is Ownership?](https://rust-book.cs.brown.edu/ch04-01-what-is-o
     ```rust
     let x = Box::new(1) //x owns the Box
     ```
-  - ownership can be **MOVED** from a variable `a` to another variable `b`
+  - **OWNERSHIP CAN BE MOVED** from a variable `a` to another variable `b`
   
-    1. variable `a` can be passed as parameter `b` to a function
+    1. variable `a` can be passed as parameter `b` to a function:
    
         ```rust
         let  a = String::from("heap_string_here");
@@ -53,14 +53,14 @@ Source [4.1 What Is Ownership?](https://rust-book.cs.brown.edu/ch04-01-what-is-o
             b
         }
         ````
-    2. variable `a` can be assigned to the variable `b`
+    2. variable `a` can be assigned to the variable `b`:
 
         ```rust
         let a = Box:new(1);
         let b = a; //moving of ownership happening here: ownership is moved from a to b
         ```
-    - the variable that has lost ownership (`a`) **cannot be used** after the moving of ownership **
-    - moving can be avoided using `.clone` &rarr; it createes *deep copies* inside the heap
+    - the variable `a`, that has lost ownership, **cannot be used** after the moving of ownership
+    - moving can be avoided using `.clone` &rarr; it creates *deep copies* inside the heap
 
 ## 4.2 References
 
