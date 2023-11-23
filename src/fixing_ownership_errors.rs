@@ -3,19 +3,19 @@
 // 3.1 use reference to heap that gets deallocated by an alias
 pub fn city_names(){
     let my_big_cities = vec![String::from("cardanoalcampo"),String::from("alcaladehenares"),String::from("madrid")];
-    let mut my_not_so_small_cities = vec![String::from("denhaag"),String::from("gandia"), String::("valencia")];
+    let mut my_not_so_small_cities = vec![String::from("denhaag"),String::from("gandia"), String::from("valencia")];
     let result = add_big_cities(&mut my_not_so_small_cities, &my_big_cities);
     println!("City {}", result);
 }
 
 pub fn add_big_cities(destination: &mut Vec<String>, source: &[String]) ->  String{
-    let max_small_city = destination.iter().max_by_key(|s| s.len()).unwrap().copy(); //max_big_city is a reference to the longest string: it removes (WO) on destination until it's out of scope
+    let max_small_city = destination.iter().max_by_key(|s| s.len()).unwrap(); //max_big_city is a reference to the longest string: it removes (WO) on destination until it's out of scope
     
-    for city in source {
-        if city.len() > max_small_city.len(){
-            destination.push(city);
-        }
-    }
+    // for city in source {
+    //     if city.len() > max_small_city.len(){
+    //         destination.push(city);
+    //     }
+    // }
     max_small_city.to_string()
 }
 
