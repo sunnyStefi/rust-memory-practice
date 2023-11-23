@@ -19,10 +19,17 @@ Sources [4.1 What Is Ownership?](https://rust-book.cs.brown.edu/ch04-01-what-is-
 - contains list of frames of _currently-called-functions_
 - LIFO
 
-#### 4. Pointer
-Variable that describes a location in memory 
-- e.g. `let pointer_to_the_heap = String::from("heap_string");` or 
-- reference e.g. `&v[2]`:
+#### 5. Heap
+- hosts 2 types of pointers:
+  1. Boxes (pointers owning data on the Heap)
+     - constructs used by collections (Vec, String, HashMap)
+     - data can only be accessed only by the owner, not aliasing
+  2. pointers (see below)
+- `push` reallocates data
+  
+#### 4. Pointers
+Variables can hold data(i32, tuples,..) or pointers (location in memory)
+- e.g. `let pointer_to_the_heap = String::from("heap_string");` or `&v[2]`:
     - Non-owning pointer &rarr; it just *borrows* a variable's data
     - **Pointer Safety Principles**
       1. data should not be aliased (R) and mutated (W) at the same time
@@ -39,13 +46,6 @@ Variable that describes a location in memory
     - MUTABLE (UNIQUE) REFERENCE (&mut)
         - the reference variable has RW permissions
         - it *temporary removes RWOF permissions to the referenced data* until the variable that's bound to the reference it's no longer alive (deallocation) &rarr; avoids undefined behaviour
-
-#### 5. Heap
-- hosts Boxes
-  - constructs used by collections (Vec, String, HashMap)
-  - data can only be accessed only by the owner, not aliasing
-- can contain pointers to the Stack
-- `push` reallocates data
 
 #### 6. Deallocation
 - deallocation is automatically managed by `rustc`
@@ -70,7 +70,8 @@ Permissions are lost after a path|variable is not longer in use.
   ```rust
   let x = Box::new(1) //x owns the Box
   ```
-- it can be **MOVED** from a variable `a` to another variable `b`
+- it can be **MOVED** from a variable `a` to another variable `b`, 
+  - `rustc` looks at the whole type signature &rarr; different **tuple** type fields are considered just one type field
 
   1. variable `a` can be passed as parameter `b` to a function:
 
@@ -102,3 +103,8 @@ Permissions are lost after a path|variable is not longer in use.
 - checks safety of input/output references, that are treated differently than references within a function body 
 
 
+### Ownership common patterns
+1. return a reference to the Stack
+2. not enough permissions
+3. aliasing and mutating4. copying vs moving out
+4. mutating different array elements
