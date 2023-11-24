@@ -1,22 +1,102 @@
-//1 return a reference to the Stack
-//2 not enough permissions
+use std::rc::Rc;
+/* 6 most common Ownership Errors 
+*/
+// 1. returning a reference to a function's local variable is not possible
+// because the local variable is dropped when the function finishes its execution
+// so the referenced data is not longer accessible
+
+pub fn i_hate_bugs(){
+    // let bug0 = returning_reference_is_not_possible();
+    let bug1 = returning_reference_is_not_possible_1();
+    let bug2 = returning_reference_is_not_possible_2();
+    let bug3 = returning_reference_is_not_possible_3();
+    let mut bug4 = String::new();
+    returning_reference_is_not_possible_4(&mut bug4);
+    println!("{bug1} {bug2} {bug3} {:?}", bug4);
+}
+// fn returning_reference_is_not_possible()->&String{
+//     let bug = String::from("cucaracha");
+//     &bug //the underline string will be deallocated when this function finishes
+// }
+
+fn returning_reference_is_not_possible_1()-> String{
+    let bug = String::from("ladybug");
+    bug
+}
+fn returning_reference_is_not_possible_2()-> &'static str{
+    "spider"
+}
+//referece counting: cloning the pointer, not its content > runtime checks
+fn returning_reference_is_not_possible_3()-> Rc<String>{
+     let bug = Rc::new(String::from("centipede"));
+     Rc::clone(&bug) 
+}
+//refactor the function signature
+fn returning_reference_is_not_possible_4(bug: &mut String){
+     bug.replace_range(..,"cockroach")
+} 
+
+// 2.1 passing immutable &ref as param and want to work with its content
+// ISSUE: similar to 3.1
+
+pub fn my_supplements(){
+    // solution 1: make mysupplements mut but that could be different from the user's needs
+    let my_supplements = vec![String::from("vitamin D"), String::from("vitamin C")];
+    let my_first_supplement = &my_supplements[0];
+    // add_magnesium_with_issue(&my_supplements); // starting point
+    // add_magnesium_with_ownership(my_supplements); //solution 2 joint to solution 1
+    let all = add_magnesium(&my_supplements);
+    println!("{all}");
+}
+
+//starting point
+// fn add_magnesium_with_issue(supplements:& Vec<String>) -> String{
+//     supplements.push(String::from("magnesium"));//ISSUE
+//     let all = supplements.join(" ");
+//     all
+// }
+//solution 2: removing & >> very rare! because it makes my_supplements unusable in the last line and supplmnts
+// fn add_magnesium_with_ownership(mut supplements: Vec<String>) -> String{
+//     supplements.push(String::from("magnesium"));//ISSUE
+//     let all = supplements.join(" ");
+//     all
+// }
+//solution 3: clone the reference and work with it
+fn add_magnesium(supplements: &Vec<String>) -> String{
+    let mut editable_supplments_for_this_function = supplements.clone();
+    editable_supplments_for_this_function.push(String::from("magnesium"));//ISSUE
+    let all = editable_supplments_for_this_function.join(" ");
+    all
+}
+
+
 // 3.1 use reference to heap that gets deallocated by an alias
+// ISSUE: destination.push(city.clone()) tries to (W) on destination 
+// while max_small_city keeps the reference to destination and (R)
+// SOLUTION: shorten max_small_city lifetime
 pub fn city_names(){
     let my_big_cities = vec![String::from("cardanoalcampo"),String::from("alcaladehenares"),String::from("madrid")];
     let mut my_not_so_small_cities = vec![String::from("denhaag"),String::from("gandia"), String::from("valencia")];
-    let result = add_big_cities(&mut my_not_so_small_cities, &my_big_cities);
-    println!("City {}", result);
+    add_big_cities(&mut my_not_so_small_cities, &my_big_cities);
+    println!("Only bigger cities are added to my cities!");
+    println!("{:?}", my_not_so_small_cities);
 }
 
-pub fn add_big_cities(destination: &mut Vec<String>, source: &[String]) ->  String{
-    let max_small_city = destination.iter().max_by_key(|s| s.len()).unwrap(); //max_big_city is a reference to the longest string: it removes (WO) on destination until it's out of scope
+fn add_big_cities(destination: &mut Vec<String>, source: &[String]){
+    //solution 1: clone max_small_city
+    let max_small_city = destination.iter().max_by_key(|s| s.len()).unwrap().clone(); //max_big_city is a ALIAS reference to the longest string: it removes (WO) on destination until it's out of scope
     
-    // for city in source {
-    //     if city.len() > max_small_city.len(){
-    //         destination.push(city);
-    //     }
-    // }
-    max_small_city.to_string()
+    //solution 2 BEST: we need only the length of the string, not all its reference
+    //let max_small_city = destination.iter().max_by_key(|s| s.len()).unwrap().len(); > destination get its permissions back after this line
+    //and then use it in the if below 
+
+    //solution 3: copy the source result to another temp vector and add this vector to destination
+
+    for city in source {
+        if city.len() > max_small_city.len(){
+            destination.push(city.clone()); //ISSUE withouth clone(): push needs (W) but we have to wait until max_small_city is dropped: we need to shorten its lifetime
+        }
+    }
 }
 
 
@@ -71,7 +151,7 @@ pub fn idontlike_blue_cars(){
     // my_tuple.1.push_str("cars!");
 }
 
-pub fn idontlike_blue_cars_get_first_part(tuple: &(String, String)) -> &String{
+fn idontlike_blue_cars_get_first_part(tuple: &(String, String)) -> &String{
     &tuple.0
 }
 //  6.1 mutate different array elements - incorrect
