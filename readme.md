@@ -24,22 +24,26 @@ Sources [4.1 What Is Ownership?](https://rust-book.cs.brown.edu/ch04-01-what-is-
   1. Boxes (pointers owning data on the Heap)
      - constructs used by collections (Vec, String, HashMap)
      - data can only be accessed only by the owner, not aliasing
-  2. pointers (see below)
+    ```rust
+    let box = Box::new(1)
+    ```
+  2. references to the stack 
+    ```rust
+    let ref_box_stack = &box
+    ```
+  4. references to the heap
+    ```rust
+    let ref_content_box_heap = &*box
+    ```
 - `push` reallocates data
   
-#### 4. Pointers
-Variables can hold data(i32, tuples,..) or pointers (location in memory)
+#### 4. References
 - e.g. `let pointer_to_the_heap = String::from("heap_string");` or `&v[2]`:
     - Non-owning pointer &rarr; it just *borrows* a variable's data
     - **Pointer Safety Principles**
       1. data should not be aliased (R) and mutated (W) at the same time
       2. do not use any reference to a data, while another reference to the same data it's still alive
-            - It can be violated by returning a reference to the Stack in a function, e.g. `&String`. Prevention:
-            
-              1. move ownership out of the function, returning a `String`
-              2. return an immortal literal `&static string`
-              3. cloning a pointer but not the data with `Rc::clone(&s)`
-              4. do not return values but **use a `&mut` as input**
+    - slices
     - IMMUTABLE REFERENCE (&)
         - the reference variable, `*reference` (R) creates temporary **aliasing** &rarr; accessing data through different variables
         - it *temporary removes WOF permissions to the referenced data* until the variable that's bound to the reference it's no longer alive (deallocation) &rarr; avoids undefined behaviour
@@ -55,8 +59,7 @@ Variables can hold data(i32, tuples,..) or pointers (location in memory)
   2. is returned from borrowing
 
 #### 7. Path Permissions on Data
-Permissions are lost after a path|variable is not longer in use.
-- Prevention: when a reference is passed as argument (R) but it content needs to be modified &rarr; clone it with `join`
+Permissions are lost after a path|variable is not longer in use
 
 #### Read (R)
 - data can be copied to another location
@@ -64,7 +67,7 @@ Permissions are lost after a path|variable is not longer in use.
 #### Write (W)
 - data can be mutated in-place
 - not enabled by default
-#### Own (O)
+#### Own (O) vs Garbage Collector
 - enabled by default
 - variables can **OWN** a data on the Heap (e.g. Box)
   ```rust
@@ -97,6 +100,7 @@ Permissions are lost after a path|variable is not longer in use.
  
   - the variable `a`, that has lost ownership (it was freed), **cannot be used** after the moving of ownership
   - moving of ownership can be avoided using `.clone` &rarr; it creates _deep copies_ inside the heap
+  - Boxes and String (that do not implement Copy), when moved, they seen removed all their permissions (RWO)
 
 - it can be **DROPPED** with `drop()`
 #### Flow (F)
@@ -104,7 +108,8 @@ Permissions are lost after a path|variable is not longer in use.
 
 
 ### Ownership common patterns
-1. return a reference to the Stack
-2. not enough permissions
-3. aliasing and mutating4. copying vs moving out
-4. mutating different array elements
+1. returning a reference to a function's local variable is not possible
+2. passing immutable &ref as param and want to edit its content
+3. using a reference while its data has been previously dropped by a function or taken by an alias
+4. modifying array content i32 vs String
+5. borrowing one element of the array and tuples

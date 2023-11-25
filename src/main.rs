@@ -16,11 +16,12 @@ fn reference_and_borrowing_cases(){
 }
 //chapter
 fn fixing_ownership_errors_cases(){
-    // 1. returning a reference to a function's local variable is not possible
+    // 1 returning a reference to a function's local variable is not possible
     fixing_ownership_errors::i_hate_bugs();
-    // 2.1 passing immutabl &ref as param and want to work with its content
+    // 2.1 passing immutable &ref as param and want to edit its content
+    // 2.2 using a reference while its data has been previously dropped by a function
     fixing_ownership_errors::my_supplements();
-    // 3.1 use reference to heap that gets deallocated by an alias
+    // 3.1 using a reference while its data has been previously taken by an alias (akin to 2.2)
     fixing_ownership_errors::city_names();
     // 4.1 modify array content - incorrect
     fixing_ownership_errors::my_plants();
