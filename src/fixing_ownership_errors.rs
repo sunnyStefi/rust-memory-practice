@@ -94,7 +94,7 @@ pub fn city_names(){
 
 fn add_big_cities(destination: &mut Vec<String>, source: &[String]){
     // solution 1: clone max_small_city
-    let max_small_city : &String = destination.iter().max_by_key(|s| s.len()).unwrap().clone(); //max_big_city is a ALIAS/reference to the longest string: it removes (WO) on destination until it's out of scope
+    let max_small_city : String = destination.iter().max_by_key(|s| s.len()).unwrap().clone(); //max_big_city is a ALIAS/reference to the longest string: it removes (WO) on destination until it's out of scope
     
     // solution 2 BEST: we need only the length of the string, not all its reference
     // let max_small_city = destination.iter().max_by_key(|s| s.len()).unwrap().len(); > destination get its permissions back after this line
