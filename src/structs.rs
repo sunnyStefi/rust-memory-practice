@@ -16,6 +16,21 @@ impl Pet {
         self.age = new_age
     }
 
+    fn create_pet_with_older_age(self, other: Pet) -> Pet { //rare: if we move a intance, this fn will get ownership
+        Pet {
+             name : String::from("Rocky"),
+            is_cute : true,
+            _type : String::from("dog"),
+            age : self.age.max(other.age),
+            constant: 7
+        }
+    }
+
+    fn set_to_max_age(&mut self, other:Pet) {
+        //here self has (RO) permissions ->see set_age
+        *self = self.create_pet_with_older_age(other); // wrong: moving ownership to create_pet..
+    }
+
     fn is_younger(&self, other:&Pet) -> bool {
         self.age < other.age
     }
@@ -32,6 +47,7 @@ impl Pet {
 }
 
 pub fn my_pets() {
+    println!("---------- Structs ----------");
     //Rust does not have a keyword for constructor functions.
     //The idiomatic way to define a constructor function is to make an associated function called new,
     let mut fido = Pet { //all fields must be mutable
@@ -69,6 +85,10 @@ pub fn my_pets() {
     println!("skye human age {}", skye_human_age);
 
     //Methods and Ownership
+    println!("-- Methods and Ownership");
+    println!("fido and chase age {} {}", fido.age, chase.age);
+    let old_rocky = fido.create_pet_with_older_age(chase); 
+    println!("new old pet rocky {:?}", old_rocky);
 } 
 
 fn generate_cute_dog(name: String) -> Pet{

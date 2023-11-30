@@ -80,14 +80,15 @@ Sources [4.1 What Is Ownership?](https://rust-book.cs.brown.edu/ch04-01-what-is-
       let b = &a;
       ```
     - the variable that hold the reference `b` has only (R) permission and creates temporary **aliasing** &rarr; accessing data through different variables
-    - it _temporary removes WO (moving and borrowing) F permissions to the referenced data `a`_ until the variable that holds the reference `b` it's no longer alive (deallocation) &rarr; avoids undefined behaviour
+    - it _temporary removes WO (moving and borrowing) F permissions to the referenced data `a` `*b`_ until the variable that holds the reference `b` it's no longer alive (deallocation) &rarr; 
   - MUTABLE (UNIQUE) REFERENCE (&mut)
     - ```rust
       let a = String::from("x")`;
       let b = &mut a;
       ```
-    - the variable that holds the reference `b` has (RW) permissions
-    - it _temporary removes RWO (moving and borrowing) F permissions to the referenced data `a`_ until the variable that holds the reference `b` it's no longer alive (deallocation) &rarr; avoids undefined behaviour
+    - only one for each scope
+    - the variable that holds the reference `b` has (RW) permissions on data `x`
+    - it _temporary removes RWO (moving and borrowing) F permissions to the referenced data `a` `*b`_ until the variable that holds the reference `b` it's no longer alive (deallocation) &rarr; avoids undefined behaviour
 
 #### 6. Deallocation
 
