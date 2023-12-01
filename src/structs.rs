@@ -1,4 +1,4 @@
-#[derive(Debug)]
+#[derive(Debug,Clone,Copy)]
 struct Pet {
     name : String,
     is_cute : bool,
