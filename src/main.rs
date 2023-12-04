@@ -1,10 +1,12 @@
 mod reference_and_borrowing;
 mod fixing_ownership_errors;
 mod structs;
+mod enums;
 
 fn main() {
     fixing_ownership_errors_cases();
     structs::my_pets();
+    enums::play_with_activity();
 }
 
 

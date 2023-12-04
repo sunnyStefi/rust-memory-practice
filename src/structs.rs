@@ -1,4 +1,4 @@
-#[derive(Clone,Copy,Debug)]
+#[derive(Clone,Debug)]
 struct Pet {
     name : String,
     is_cute : bool,
@@ -26,10 +26,10 @@ impl Pet {
         }
     }
 
-    fn set_to_max_age(&mut self, other:Pet) {
-        //here self has (RO) permissions ->see set_age
-        *self = self.create_pet_with_older_age(other); // wrong: moving ownership to create_pet..
-    }
+    // fn set_to_max_age(&mut self, other:Pet) {
+    //     //here self has (RO) permissions ->see set_age
+    //     *self = self.create_pet_with_older_age(other); // wrong: moving ownership to create_pet..
+    // }
 
     fn is_younger(&self, other:&Pet) -> bool {
         self.age < other.age
