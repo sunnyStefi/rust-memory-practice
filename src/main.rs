@@ -3,12 +3,12 @@ mod fixing_ownership_errors;
 mod structs;
 mod enums;
 mod matching;
+mod modules;
 
 fn main() {
     fixing_ownership_errors_cases();
-    structs::my_pets();
-    enums::play_with_activity();
-    matching::corresponding_cents();
+    strucs_enum_matching();
+    modules::modules_();
 }
 
 
@@ -20,7 +20,15 @@ fn reference_and_borrowing_cases(){
     reference_and_borrowing::reference_mutable();
     reference_and_borrowing::reference_immutable();
 }
-//chapter
+
+fn strucs_enum_matching(){
+    structs::my_pets();
+    enums::play_with_activity();
+    matching::corresponding_cents();
+}
+
+
+
 fn fixing_ownership_errors_cases(){
     // 1 returning a reference to a function's local variable is not possible
     fixing_ownership_errors::i_hate_bugs();
