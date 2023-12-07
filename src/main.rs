@@ -4,11 +4,13 @@ mod structs;
 mod enums;
 mod matching;
 mod modules;
+mod common_collections;
 
 fn main() {
     fixing_ownership_errors_cases();
     strucs_enum_matching();
     modules::modules_();
+    common_collections::vectors_();
 }
 
 
