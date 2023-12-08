@@ -10,7 +10,7 @@ fn main() {
     fixing_ownership_errors_cases();
     strucs_enum_matching();
     modules::modules_();
-    common_collections::vectors_();
+    common_collections();
 }
 
 
@@ -27,6 +27,11 @@ fn strucs_enum_matching(){
     structs::my_pets();
     enums::play_with_activity();
     matching::corresponding_cents();
+}
+
+fn common_collections(){
+    common_collections::vectors_();
+    common_collections::strings_();
 }
 
 
