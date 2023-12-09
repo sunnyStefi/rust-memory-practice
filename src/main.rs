@@ -32,6 +32,7 @@ fn strucs_enum_matching(){
 fn common_collections(){
     common_collections::vectors_();
     common_collections::strings_();
+     common_collections::hash_maps_();
 }
 
 

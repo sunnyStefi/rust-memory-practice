@@ -28,7 +28,41 @@ pub fn strings_(){
 }
 
 pub fn hash_maps_(){
-    let scores = HashMap::new();
-    scores.insert(String::from("Red"),10);
+    let mut scores = HashMap::new();
+    scores.insert(String::from("Red"),10);  //Strings are ownd by th hashmap once inserted: cant reference thm
     scores.insert(String::from("Blue"),3);
+
+    let requested_label= String::from("Blue");
+    let non_existing_label = String::from("Yellow");
+
+    let value = scores.get(&requested_label).copied().unwrap_or(0); //copied gets i32 instead &i32
+    let zero = scores.get(&non_existing_label); //get gives Option<T>
+
+    println!("Hash map values {value} {:?}", zero);
+
+    for (key, value) in &scores {
+        println!("{key} scores is {value}");
+    }
+
+    scores.insert(String::from("Blue"),19); //this will overwrite 3
+    scores.entry(String::from("Blue")).or_insert(20); //insert only if Blue does not exist
+
+    println!("All scores {:?}", scores);
+
+    let main_string = "i like coffee";
+    let mut new_hashmap = HashMap::new();
+    
+    for word in main_string.split_whitespace(){
+        let counter = new_hashmap.entry(word).or_insert(0);  //or insert gives a &mut for the value!
+        *counter +=1;
+    }
+
+    println!("new hashmap {:?}",new_hashmap);
+
+    let mut new_hashmap : HashMap<char, Vec<usize>>= HashMap::new();
+    for (index, charact) in "i like coffee".chars().enumerate(){
+        new_hashmap.entry(charact).or_insert(Vec::new()).push(index);
+    }
+
+    println!("new hashmap {:?}",new_hashmap);
 }
