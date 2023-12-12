@@ -1,4 +1,4 @@
 push:
 	git add .
-	git commit -m "init makefile"
+	git commit -m "errors"
 	git push origin master
