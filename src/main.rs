@@ -5,15 +5,20 @@ mod enums;
 mod matching;
 mod modules;
 mod common_collections;
+mod error;
 
 fn main() {
     fixing_ownership_errors_cases();
     strucs_enum_matching();
     modules::modules_();
     common_collections();
+    errors_();
 }
 
-
+fn errors_(){
+    error::lets_panic();
+    error::lets_recover();
+}
 fn reference_and_borrowing_cases(){
     reference_and_borrowing::moving_reference();
     reference_and_borrowing::dereferencing();
@@ -32,10 +37,8 @@ fn strucs_enum_matching(){
 fn common_collections(){
     common_collections::vectors_();
     common_collections::strings_();
-     common_collections::hash_maps_();
+    common_collections::hash_maps_();
 }
-
-
 
 fn fixing_ownership_errors_cases(){
     // 1 returning a reference to a function's local variable is not possible
