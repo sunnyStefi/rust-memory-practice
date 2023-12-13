@@ -1,4 +1,4 @@
 push:
 	git add .
-	git commit -m "errors"
+	git commit -m "generics"
 	git push origin master

@@ -58,7 +58,7 @@ pub fn lets_recover(){
 
 fn last_char_first_line(text: &str) -> Option<char> {
     //lines -> &str
-    //next -> Some<&str> or None
+    //next -> Some<&str> or None -> returns Option
     //chars -> iterator over characters
     //last -> Some<char> 
     text.lines().next()?.chars().last()

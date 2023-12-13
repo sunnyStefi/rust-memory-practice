@@ -6,6 +6,7 @@ mod matching;
 mod modules;
 mod common_collections;
 mod error;
+mod generics;
 
 fn main() {
     fixing_ownership_errors_cases();
@@ -13,12 +14,21 @@ fn main() {
     modules::modules_();
     common_collections();
     errors_();
+    generics_();
+}
+
+fn generics_ () {
+    generics::print_largest_number();
+    generics::print_largest_generic();
+    generics::use_generic_struct();
+    generics::use_generic_struct_method();
 }
 
 fn errors_(){
     error::lets_panic();
     error::lets_recover();
 }
+
 fn reference_and_borrowing_cases(){
     reference_and_borrowing::moving_reference();
     reference_and_borrowing::dereferencing();
