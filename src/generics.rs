@@ -88,3 +88,45 @@ pub fn use_generic_struct_method() {
     println!("mixing different points {} {}", mixed_point.x, mixed_point.y);
 
 }
+
+//10.2 Traits
+pub struct Article {
+    pub headline: String,
+    pub content: String
+}
+
+pub struct Tweet {
+    pub retweet: bool,
+    pub content: String
+}
+
+trait Summary {
+    fn summarize(&self) -> String;
+
+    //no need to implement this
+    fn default_example(&self) -> String {
+        String::from("I'm a default content")
+    }
+}
+
+impl Summary for Article {
+    fn summarize(&self) -> String {
+        format!("{} {}", self.headline, self.content)
+    }
+}
+
+impl Summary for Tweet {
+    fn summarize(&self) -> String {
+        format!("{} {}", self.retweet, self.content)
+    }
+}
+
+pub fn use_trait(){
+    let article = Article {
+        headline: String::from("Important headline!"),
+        content: String::from("Nothing impressive"),
+    };
+    println!("{}", article.summarize());
+     println!("{}", article.default_example());
+}
+

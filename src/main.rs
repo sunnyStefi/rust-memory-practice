@@ -22,6 +22,7 @@ fn generics_ () {
     generics::print_largest_generic();
     generics::use_generic_struct();
     generics::use_generic_struct_method();
+    generics::use_trait();
 }
 
 fn errors_(){
