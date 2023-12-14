@@ -89,7 +89,7 @@ pub fn use_generic_struct_method() {
 
 }
 
-//10.2 Traits
+//10.2 Traits: defining shared behaviour
 pub struct Article {
     pub headline: String,
     pub content: String
@@ -121,12 +121,17 @@ impl Summary for Tweet {
     }
 }
 
+fn use_trait_as_param(traitt: &impl Summary){
+    println!("{}",traitt.summarize())
+}
+
 pub fn use_trait(){
     let article = Article {
         headline: String::from("Important headline!"),
         content: String::from("Nothing impressive"),
     };
     println!("{}", article.summarize());
-     println!("{}", article.default_example());
+    println!("{}", article.default_example());
+    println!("{}", use_trait_as_param(article));
 }
 
