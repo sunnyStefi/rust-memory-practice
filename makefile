@@ -1,4 +1,4 @@
 push:
 	git add .
-	git commit -m "generics"
+	git commit -m "traits"
 	git push origin master

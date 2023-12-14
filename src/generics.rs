@@ -132,6 +132,6 @@ pub fn use_trait(){
     };
     println!("{}", article.summarize());
     println!("{}", article.default_example());
-    println!("{}", use_trait_as_param(article));
+    use_trait_as_param(&article);
 }
 
