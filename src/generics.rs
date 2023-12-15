@@ -125,6 +125,12 @@ fn use_trait_as_param(traitt: &impl Summary){
     println!("{}",traitt.summarize())
 }
 
+fn return_trait() -> impl Summary{
+    Tweet {
+        retweet: false,
+        content: String::from("tweeet")
+    }
+}
 pub fn use_trait(){
     let article = Article {
         headline: String::from("Important headline!"),
@@ -133,5 +139,61 @@ pub fn use_trait(){
     println!("{}", article.summarize());
     println!("{}", article.default_example());
     use_trait_as_param(&article);
+    return_trait();
 }
 
+// 10.3 Lifetimes: validating references
+
+fn short_life_reference(){
+    let mut ference;
+    {
+        let inner_ference = 5;
+        ference = &inner_ference;
+    }
+    // println!("{}",ference); //borrowed value does not live long enough
+}
+
+//generic lifetimes: functions
+fn generic_lifetimes(){
+    let str1 = String::from("a");
+    let str2 = "bb";
+    let result;
+
+    let long_str = longest_str(str1.as_str(), str2);
+    println!("longest string same lifetimes {}", long_str);
+
+    {
+        let str3 = "cc";
+        let long_str = longest_str(str1.as_str(), str3);
+        println!("longest string same lifetimes {}", long_str); //str3 has smaller lifetime, lo long_str has the same lifetime
+        let str4 = String::from("dd");
+        result = longest_str(str1.as_str(), &str4);
+    }
+    // println!("{}",result); //str4 would need to be valid until the end of the outer scopee
+}
+
+//'a will reduce result lifetime as the smaller of the lifetimes we passed
+fn longest_str<'a>(a: &'a str, b: &'a str) -> &'a str{ 
+    if a.len() > b.len() { a } else { b }
+}
+
+//generic lifetimes: struct
+struct Excerpt<'a>{
+    part: &'a str,
+}
+
+fn generic_lifetimes_struct(){
+    let exc = String::from("Excerpt");
+    let exc_struct = Excerpt {
+        part: &exc,
+    };
+    println!("This is a reference in a struct {}", exc_struct.part);
+}
+
+pub fn use_lifetimes(){
+    //functions
+    short_life_reference();
+    generic_lifetimes();
+    //structs
+    generic_lifetimes_struct();
+}

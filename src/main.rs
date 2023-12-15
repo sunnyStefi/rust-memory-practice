@@ -23,6 +23,7 @@ fn generics_ () {
     generics::use_generic_struct();
     generics::use_generic_struct_method();
     generics::use_trait();
+    generics::use_lifetimes();
 }
 
 fn errors_(){
