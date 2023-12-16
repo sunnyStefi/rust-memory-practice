@@ -7,6 +7,7 @@ mod modules;
 mod common_collections;
 mod error;
 mod generics;
+mod ownership_inventory;
 
 fn main() {
     fixing_ownership_errors_cases();
@@ -15,6 +16,11 @@ fn main() {
     common_collections();
     errors_();
     generics_();
+    ownership_inventory_();
+}
+
+fn ownership_inventory_(){
+    ownership_inventory::perform_find_nth_element();
 }
 
 fn generics_ () {
