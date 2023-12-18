@@ -8,6 +8,7 @@ mod common_collections;
 mod error;
 mod generics;
 mod ownership_inventory;
+mod test;
 
 fn main() {
     fixing_ownership_errors_cases();
