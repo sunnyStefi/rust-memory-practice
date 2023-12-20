@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "rust_memory_practice"
+name = "rust_book"
 version = "0.1.0"

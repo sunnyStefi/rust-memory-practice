@@ -8,7 +8,7 @@ mod common_collections;
 mod error;
 mod generics;
 mod ownership_inventory;
-mod test;
+mod tests;
 
 fn main() {
     fixing_ownership_errors_cases();
@@ -80,4 +80,6 @@ fn fixing_ownership_errors_cases(){
     // 6.2 mutate different array elements
     fixing_ownership_errors::add_both_horses();
 }
-
+pub fn add_two(number:i32) ->i32 {
+    return number+2
+}
