@@ -9,6 +9,7 @@ mod error;
 mod generics;
 mod ownership_inventory;
 mod tests;
+mod closures;
 
 fn main() {
     fixing_ownership_errors_cases();
@@ -18,6 +19,12 @@ fn main() {
     errors_();
     generics_();
     ownership_inventory_();
+    closures_();
+}
+fn closures_(){
+    closures::giveaway();
+    closures::thread_();
+    closures::iterator_();
 }
 
 fn ownership_inventory_(){
